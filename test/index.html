@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light only" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.4/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <title>Special For You</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="preload">
+        <p>Loading...</p>
+      </div>
+      <div class="bg-popup"></div>
+      <div class="bg"></div>
+
+      <div class="content wa-content">
+        <h1 class="jam">00:00</h1>
+        <p class="tgl">Monday, 11 November 2024</p>
+      </div>
+      <div class="btn-wa-content">
+        <button class="btn mulai-notif show">Klik Aku</button>
+        <button class="btn next">Pesan Selanjutnya</button>
+        <button class="btn kirim-pesan">Kirim Pesan</button>
+      </div>
+    </div>
+    <script>
+      namaPengirim = "Your Love❤️";
+
+      // Masukan ucapan didalam kutip, untuk menambah baris baru gunakan hashtag (#)
+      ucapan = [
+        `Ucapan 1#Ini baris kedua`,
+        `Ucapan 2`,
+        `Ucapan 3`,
+        `Ucapan 4`,
+        `Ucapan 5`
+      ];
+
+      // Masukan nama file musik didalam kutip
+      musik = "File musik";
+
+      // [Optional] Masukan nomor whatsapp diawali kode negara, kalo indonesia diawali 62
+      nomorWhatsapp = "";
+
+      // true: jam realtime waktu sekarang. false: jam statis/tetap (Bisa atur di coding baris/line 21 dan 22)
+      tglJamRealtime = true;
+
+      // Masukan nama file gambar background didalam kutip
+      background = ["sayang1.jpg"];
+
+      async function popupAwal() {
+        await swalo.fire({ title: "Hi Sayang!" });
+        await swalo.fire({ title: "Are you feeling okay?", showDenyButton: 1, confirmButtonText: "Ok", denyButtonText: "Cancel" }).then(async (e) => {
+          if (e.isConfirmed) {
+            await swalo.fire({ title: "I Love You❤️" });
+          }
+          if (e.isDenied) {
+            await swalo.fire({ title: "Aww! I'll give you a hug.\nCheer up !", imageUrl: "http://files.dariku.my.id/mylove/peluk.gif" });
+
+            await swalo.fire({ title: "Are you feeling better?", showDenyButton: 1, confirmButtonText: "Ok", denyButtonText: "Cancel" }).then(async (e) => {
+              if (e.isConfirmed) {
+                await swalo.fire({ title: "I Love You❤️" });
+              }
+              if (e.isDenied) {
+                await swalo.fire({ title: "Aww! I'll give you a hug.\nCheer up !", imageUrl: "http://files.dariku.my.id/mylove/peluk.gif" });
+              }
+            });
+          }
+        });
+
+        await swalo.fire({ title: "Aku ingin katakan sesuatu..." });
+        await swalo.fire({ title: "nak tahu?", showDenyButton: 1, confirmButtonText: "MAHUU", denyButtonText: "IYAA" });
+        await swalo.fire({ title: "HAHA okayy" });
+        removeBgPopup();
+      }
+
+      var swalo = Swal.mixin({ allowOutsideClick: false, reverseButtons: true });
+      async function kirimpesan() {
+        var { value: pesan } = await swalo.fire({ imageUrl: "https://files.dariku.my.id/mylove/cutie1.gif", title: "Tulis pesan", input: "textarea", confirmButtonText: "Kirim" });
+        if (pesan) {
+          await swalo.fire({ title: "Kirim pesannya ke wa ya" });
+          location.assign(`https://wa.me/${nomorWhatsapp}?text=${pesan}`);
+        } else {
+          await swalo.fire({ imageUrl: "https://files.dariku.my.id/mylove/cutie2.gif", title: "Jangan dikosongin dong" });
+          kirimpesan();
+        }
+      }
+
+      isKlikNotif = true;
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
